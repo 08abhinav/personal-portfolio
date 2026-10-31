@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Abhinav Negi</title>
+<meta name="description" content="Postgrad with skills in cloud-native and backend development. Looking for backend, cloud and DevOps roles.">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<script>
+  // set theme before paint to avoid a flash
+  (function(){try{var t=localStorage.getItem('theme');
+  if(!t)t='dark';
+  document.documentElement.dataset.theme=t}catch(e){}})();
+</script>
+<style>
+:root{
+  --bg:#060506; --fg:#fbf7ef; --muted:#c2bcb1; --line:rgba(255,255,255,.18); --card:rgba(16,12,12,.62);
+  --o:rgba(255,128,32,.2); --r:rgba(230,45,36,.19); --halo:rgba(255,100,30,.15); --deep:rgba(170,22,22,.12); --grain:.08;
+  --g0:rgba(255,255,255,.08); --g1:#5c2a1c; --g2:#a2441f; --g3:#e8641f; --g4:#ffb067;
+  --serif:'Instrument Serif',Georgia,serif; --sans:'Inter',system-ui,sans-serif;
+}
+:root[data-theme=light]{
+  --bg:#fbf4ea; --fg:#140e0b; --muted:#4d443c; --line:rgba(20,10,0,.2); --card:rgba(255,250,242,.7);
+  --o:rgba(255,132,44,.34); --r:rgba(235,58,44,.26); --halo:rgba(255,128,56,.34); --deep:rgba(235,70,50,.2); --grain:.12;
+  --g0:rgba(0,0,0,.07); --g1:#ffd9b8; --g2:#ffa860; --g3:#e8641f; --g4:#a82a0c;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{background:var(--bg);color:var(--fg);font:16px/1.7 var(--sans);-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+/* background effect: soft glows + film grain, recoloured per theme */
+html::before{content:"";position:fixed;inset:-6%;z-index:-3;pointer-events:none;background:conic-gradient(from 0deg at 50% -6%,transparent 0deg,transparent 145deg,var(--r) 151deg,transparent 157deg,transparent 153deg,var(--o) 160deg,transparent 167deg,transparent 164deg,var(--r) 169deg,transparent 174deg,transparent 170deg,var(--o) 176deg,transparent 182deg,transparent 178deg,var(--r) 184deg,transparent 190deg,transparent 186deg,var(--o) 191deg,transparent 196deg,transparent 193deg,var(--r) 200deg,transparent 207deg,transparent 203deg,var(--o) 209deg,transparent 215deg,transparent 213deg,var(--r) 218deg,transparent 223deg,transparent 360deg);filter:blur(16px);
+  -webkit-mask-image:linear-gradient(180deg,#000 0,rgba(0,0,0,.6) 25%,transparent 62%);mask-image:linear-gradient(180deg,#000 0,rgba(0,0,0,.6) 25%,transparent 62%)}
+body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:radial-gradient(ellipse 38% 26% at 50% 44%,var(--halo),transparent 100%),
+             radial-gradient(ellipse 62% 46% at 50% 48%,var(--deep),transparent 100%)}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:var(--grain);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+a{color:inherit}
+main{max-width:680px;margin:0 auto;padding:96px 24px 140px}
+section{margin-top:84px}
+h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.1;letter-spacing:-.01em}
+h1{font-size:clamp(48px,9vw,68px)}
+h1 em,.lead em{color:var(--muted)}
+.lead{font-family:var(--serif);font-size:clamp(26px,5vw,34px);color:var(--fg);margin-top:8px;line-height:1.2}
+h2{font-size:34px;margin-bottom:20px}
+p{color:var(--muted);margin-bottom:14px}
+p strong{color:var(--fg);font-weight:500}
+.hero{display:flex;gap:28px;align-items:center;justify-content:space-between}
+.avatar{flex:none;width:112px;height:112px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;
+  font:italic 44px var(--serif);background:var(--card);backdrop-filter:blur(8px)}
+.avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+.proj{display:block;text-decoration:none;padding:20px 22px;margin-bottom:12px;border:1px solid var(--line);border-radius:14px;background:var(--card);backdrop-filter:blur(8px);transition:border-color .2s,transform .2s}
+.proj:hover,.proj:focus-visible{border-color:var(--muted);transform:translateY(-2px)}
+.proj h3{font-size:26px;display:flex;justify-content:space-between;gap:12px}
+.proj h3 span{font:14px var(--sans);color:var(--muted)}
+.proj p{margin:6px 0 0;font-size:15px}
+.skills dl{display:grid;grid-template-columns:120px 1fr;gap:14px 20px;border-top:1px solid var(--line);padding-top:18px}
+.skills dt{color:var(--muted);font-size:15px;padding-top:4px}
+.skills dd{display:flex;flex-wrap:wrap;gap:8px}
+.skills dd.cloud{flex-direction:column;gap:8px}.sub{color:var(--fg);font-size:15px}.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:4px 13px;border:1px solid var(--line);border-radius:99px;font-size:14px;background:var(--card)}
+.gh-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px}
+#graph{overflow-x:auto;padding-bottom:8px}
+#cells{display:grid;grid-template-rows:repeat(7,11px);grid-auto-flow:column;grid-auto-columns:11px;gap:3px;width:max-content}
+#cells i{border-radius:2px;background:var(--g0)}
+#cells i[data-l="1"]{background:var(--g1)}#cells i[data-l="2"]{background:var(--g2)}
+#cells i[data-l="3"]{background:var(--g3)}#cells i[data-l="4"]{background:var(--g4)}
+.links{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:18px}
+.links a{color:var(--muted);text-underline-offset:4px}.links a:hover{color:var(--fg)}
+.mail{font:32px var(--serif);text-decoration:none;border-bottom:1px solid var(--line)}
+.mail:hover{border-color:var(--fg)}
+footer{margin-top:72px;color:var(--muted);font-size:14px}
+/* floating nav */
+nav{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:10;display:flex;gap:2px;align-items:center;
+  padding:6px;border:1px solid var(--line);border-radius:99px;background:var(--card);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);
+  max-width:calc(100vw - 16px)}
+nav a,nav button{display:grid;place-items:center;width:42px;height:38px;color:var(--muted);text-decoration:none;padding:0;border-radius:99px;border:0;background:none;cursor:pointer;white-space:nowrap;transition:color .2s,background .2s}
+nav a:hover,nav button:hover{color:var(--fg);background:var(--g0)}
+nav a,nav button{position:relative}
+nav [data-tip]::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 16px);left:50%;transform:translate(-50%,4px);padding:5px 11px;border-radius:8px;background:var(--fg);color:var(--bg);font:500 12px/1.4 var(--sans);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s,transform .15s}
+nav [data-tip]:hover::after,nav [data-tip]:focus-visible::after{opacity:1;transform:translate(-50%,0)}
+@media(max-width:420px){nav a,nav button{width:36px}}
+nav svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.moon{display:none}[data-theme=light] .moon{display:block}[data-theme=light] .sunic{display:none}
+nav i{width:1px;height:18px;background:var(--line);margin:0 4px;flex:none}
+:focus-visible{outline:2px solid var(--g3);outline-offset:2px}
+/* one load-in moment: the hero */
+.hero>*{animation:in .8s cubic-bezier(.2,.7,.2,1) both}.hero>:nth-child(2){animation-delay:.12s}
+@keyframes in{from{opacity:0;transform:translateY(10px)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
+@media(max-width:520px){.hero{flex-direction:column-reverse;align-items:flex-start}.skills dl{grid-template-columns:1fr;gap:6px}.skills dd{margin-bottom:10px}}
+</style>
+</head>
+<body>
+<main id="home">
+  <div class="hero">
+    <div>
+      <h1>I’m Abhinav Negi.</h1>
+      <p class="lead">A Recent Postgrad in <em>computer application.</em></p>
+    </div>
+    <!-- replace the letter with  when you have a photo -->
+    <div class="avatar" aria-hidden="true"><img src="profile_pic2.jpeg" alt="Abhinav Negi"></div>
+  </div>
+
+  <section id="about">
+    <h2>About me</h2>
+    <p>I’m a postgrad focused on <strong>backend and cloud-native engineering</strong>. I like to break things, then build them back better, and I go deep on a concept until I understand why it works, not just how to use it.</p>
+    <p>I’ve built projects that taught me what it takes to ship real software: picking the right tools, wiring them together, and keeping them running.</p>
+    <p>I like taking ownership and seeing things through. I learn fast, spot patterns, and break complex concepts into small blocks that anyone on the team can follow.</p>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <a class="proj" href="https://github.com/08abhinav/croplink" target="_blank" rel="noopener">
+      <h3>Croplink <span>GitHub ↗</span></h3>
+      <p>CropLink is a full-stack URL shortener that enables users to create custom short links, manage them through a dashboard, and monitor click analytics in real time using a modern Go and React stack.</p>
+    </a>
+    <a class="proj" href="https://github.com/08abhinav/ragify" target="_blank" rel="noopener">
+      <h3>Ragify <span>GitHub ↗</span></h3>
+      <p>Multi-Source RAG App Upload PDFs, DOCX, CSV files and get AI-powered answers directly from your data. Built with Retrieval-Augmented Generation (RAG), this app enables seamless question-answering across multiple data sources with high accuracy.</p>
+    </a>
+  </section>
+
+  <section id="skills" class="skills">
+    <h2>Skills</h2>
+    <dl>
+      <dt>Programming</dt><dd><span class="chip">Go</span><span class="chip">JavaScript</span></dd>
+      <dt>Databases</dt><dd><span class="chip">MongoDB</span><span class="chip">PostgreSQL</span></dd>
+      <dt>Tools</dt><dd><span class="chip">Docker</span><span class="chip">Kubernetes</span><span class="chip">Linux</span><span class="chip">Bash</span><span class="chip">Git</span><span class="chip">GitHub Actions</span><span class="chip">Prometheus</span><span class="chip">Grafana</span></dd>
+      <dt>Cloud</dt><dd class="cloud"><span class="sub">AWS</span><div class="chips"><span class="chip">VPC</span><span class="chip">Subnet</span><span class="chip">IAM</span><span class="chip">EC2</span><span class="chip">S3</span><span class="chip">ECR</span><span class="chip">ECS</span><span class="chip">EKS</span><span class="chip">ALB</span><span class="chip">Aurora</span></div></dd>
+    </dl>
+  </section>
+
+  <section id="github">
+    <div class="gh-head"><h2>GitHub</h2><p id="total">Loading contributions…</p></div>
+    <div id="graph"><div id="cells" aria-label="GitHub contribution graph"></div></div>
+    <p><a href="https://github.com/08abhinav" target="_blank" rel="noopener">View GitHub activity ↗</a></p>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>I’m looking for <strong>backend, cloud and DevOps roles</strong> where I can work on cloud-native systems and keep learning from a strong team. If you’re hiring, or have a problem worth solving, email me.</p>
+    <a class="mail" href="mailto:abhinavnegi101@gmail.com">abhinavnegi101@gmail.com</a>
+    <ul class="links">
+      <li><a href="https://github.com/08abhinav" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://linkedin.com/in/08abhinav" target="_blank" rel="noopener">LinkedIn</a></li>
+      <li><a href="https://medium.com/@abhinavnegi101" target="_blank" rel="noopener">Medium</a></li>
+    </ul>
+    <footer>© <span id="yr"></span> Abhinav Negi</footer>
+  </section>
+</main>
+
+<nav aria-label="Primary">
+  <a href="#home" aria-label="Home" data-tip="Home"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg></a>
+  <i></i>
+  <a href="#projects" aria-label="Projects" data-tip="Projects"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></a>
+  <a href="#github" aria-label="GitHub activity" data-tip="GitHub"><svg viewBox="0 0 24 24"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 00-1.3-3.2 4.2 4.2 0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 00-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 00-.1 3.2A4.6 4.6 0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a>
+  <a href="https://linkedin.com/in/08abhinav" target="_blank" rel="noopener" aria-label="LinkedIn" data-tip="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 2a2 2 0 110 4 2 2 0 010-4z"/></svg></a>
+  <a href="#contact" aria-label="Contact" data-tip="Mail"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
+  <a href="resume.pdf" download="Abhinav_Resume.pdf" aria-label="Download resume" data-tip="Resume"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8zM14 3v5h5M12 11v6M9.5 14.5L12 17l2.5-2.5"/></svg></a>
+  <i></i>
+  <button id="theme" type="button" aria-label="Toggle theme" data-tip="Theme">
+    <svg class="sunic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    <svg class="moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>
+  </button>
+</nav>
+
+<script>
+document.getElementById('yr').textContent=new Date().getFullYear();
+document.getElementById('theme').onclick=function(){
+  var t=document.documentElement.dataset.theme==='dark'?'light':'dark';
+  document.documentElement.dataset.theme=t;try{localStorage.setItem('theme',t)}catch(e){}
+};
+
+// Fetch GitHub contributions and render cleanly into the graph container
+fetch('https://github-contributions-api.jogruber.de/v4/08abhinav?y=last')
+  .then(function(r){if(!r.ok)throw 0;return r.json()})
+  .then(function(d){
+    var days=d.contributions, box=document.getElementById('cells');
+    box.innerHTML = ''; // clear loading state
+    
+    // Calculate leading padding based on the first day of the year array
+    var pad = new Date(days[0].date + 'T00:00:00').getDay();
+    for(var i = 0; i < pad; i++) {
+      var emptyEl = document.createElement('i');
+      emptyEl.style.visibility = 'hidden';
+      box.appendChild(emptyEl);
+    }
+    
+    // Populate contribution cells
+    days.forEach(function(c){
+      var e = document.createElement('i');
+      e.dataset.l = c.level;
+      e.title = c.count + ' contributions on ' + c.date;
+      box.appendChild(e);
+    });
+    
+    // Calculate total contributions
+    var n = days.reduce(function(s, c){ return s + c.count; }, 0);
+    document.getElementById('total').textContent = n.toLocaleString() + ' contributions in the last year';
+    document.getElementById('graph').scrollLeft = 9999;
+  })
+  .catch(function(){
+    document.getElementById('total').textContent = 'Graph unavailable right now.';
+    document.getElementById('graph').hidden = true;
+  });
+</script>
+</body>
+</html>
