@@ -77,6 +77,21 @@ p strong{color:var(--fg);font-weight:500}
 .mail{font:32px var(--serif);text-decoration:none;border-bottom:1px solid var(--line)}
 .mail:hover{border-color:var(--fg)}
 footer{margin-top:72px;color:var(--muted);font-size:14px}
+/* CLI terminal */
+.term{border:1px solid var(--line);border-radius:14px;background:var(--card);backdrop-filter:blur(8px);overflow:hidden;font:14px/1.65 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.term-bar{display:flex;align-items:center;gap:7px;padding:10px 14px;border-bottom:1px solid var(--line);color:var(--muted);font-size:13px}
+.term-bar i{width:10px;height:10px;border-radius:50%;border:1px solid var(--muted);opacity:.7}
+.term-bar b{font-weight:400;margin-left:8px}
+.term-out{height:300px;overflow-y:auto;padding:14px;white-space:pre-wrap;word-break:break-word;color:var(--fg)}
+.term-out .dim{color:var(--muted)}.term-out .err{color:#e5484d}
+.term-out a{color:var(--g4);text-underline-offset:3px}
+.ps{color:var(--g4)}
+.term-in{display:flex;align-items:center;gap:8px;padding:11px 14px;border-top:1px solid var(--line);cursor:text}
+.term-in input{flex:1;min-width:0;background:none;border:0;outline:none;color:var(--fg);font:inherit;font-size:16px;caret-color:var(--g4)}
+.term-in:focus-within{box-shadow:inset 0 0 0 1px var(--g3)}
+.term-btns{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 4px}
+button.chip{cursor:pointer;color:var(--fg);font-family:var(--sans)}button.chip:hover{border-color:var(--muted)}
+.term-hint code,#cli code{font:13px ui-monospace,Menlo,Consolas,monospace;background:var(--g0);padding:2px 6px;border-radius:6px;color:var(--fg)}
 /* floating nav */
 nav{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:10;display:flex;gap:2px;align-items:center;
   padding:6px;border:1px solid var(--line);border-radius:99px;background:var(--card);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);
@@ -136,6 +151,22 @@ nav i{width:1px;height:18px;background:var(--line);margin:0 4px;flex:none}
       <dt>Tools</dt><dd><span class="chip">Docker</span><span class="chip">Kubernetes</span><span class="chip">Linux</span><span class="chip">Bash</span><span class="chip">Git</span><span class="chip">GitHub Actions</span><span class="chip">Prometheus</span><span class="chip">Grafana</span></dd>
       <dt>Cloud</dt><dd class="cloud"><span class="sub">AWS</span><div class="chips"><span class="chip">VPC</span><span class="chip">Subnet</span><span class="chip">IAM</span><span class="chip">EC2</span><span class="chip">S3</span><span class="chip">ECR</span><span class="chip">ECS</span><span class="chip">EKS</span><span class="chip">ALB</span><span class="chip">Aurora</span></div></dd>
     </dl>
+  </section>
+
+  <section id="cli">
+    <h2>Interact with my CLI</h2>
+    <p>This terminal runs a command-line tool I wrote in Go with Cobra. Press Enter to run <code>ping</code>, or type <code>commands</code> to see everything it can do.</p>
+    <div class="term" id="term">
+      <div class="term-bar"><i></i><i></i><i></i><b>abhinav@portfolio</b></div>
+      <div class="term-out" id="tout" role="log" aria-live="polite"></div>
+      <label class="term-in"><span class="ps">abhinav@portfolio:~$</span>
+        <input id="tin" type="text" value="ping" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Type a command and press Enter">
+      </label>
+    </div>
+    <div class="term-btns" aria-label="Quick commands">
+      <button class="chip" type="button" data-cmd="ping">ping</button><button class="chip" type="button" data-cmd="whoami">whoami</button><button class="chip" type="button" data-cmd="socials">socials</button><button class="chip" type="button" data-cmd="whereami">whereami</button><button class="chip" type="button" data-cmd="stack">stack</button><button class="chip" type="button" data-cmd="commands">commands</button><button class="chip" type="button" data-cmd="clear">clear</button>
+    </div>
+    <p class="term-hint">Prefer curl? <code>curl "https://abhinavnegi.site/api/run?cmd=whoami"</code> &middot; Tab completes, &uarr; &darr; browse history.</p>
   </section>
 
   <section id="github">
@@ -247,6 +278,70 @@ getJSON('contributions.json',8000)
         a.appendChild(h);a.appendChild(el('p',null,'#'+i.number+' '+i.title));box.appendChild(a);
       });
     }).catch(fail);
+})();
+</script>
+<script>
+// CLI terminal: sends each line to the Go service at /api/run
+(function(){
+  var out=document.getElementById('tout'),inp=document.getElementById('tin'),term=document.getElementById('term');
+  var CMDS=['ping','whoami','socials','whereami','stack','commands','clear'];
+  var hist=[],hi=0,busy=false,URL_RE=/((?:https?:\/\/|mailto:)[^\s]+)/g;
+  function tz(){try{return Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){return ''}}
+  function add(text,cls){
+    var d=document.createElement('div');if(cls)d.className=cls;
+    text.split(URL_RE).forEach(function(part,i){
+      if(i%2){var a=document.createElement('a');a.href=part;a.textContent=part;a.target='_blank';a.rel='noopener';d.appendChild(a)}
+      else if(part)d.appendChild(document.createTextNode(part));
+    });
+    out.appendChild(d);out.scrollTop=out.scrollHeight;
+  }
+  function echo(line){
+    var d=document.createElement('div'),p=document.createElement('span');
+    p.className='ps';p.textContent='$ ';d.appendChild(p);d.appendChild(document.createTextNode(line));
+    out.appendChild(d);
+  }
+  function show(text,isErr){
+    var clear=/\x1b\[2J/.test(text);
+    text=text.replace(/\x1b\[[0-9;]*[A-Za-z]/g,'').replace(/\s+$/,'');
+    if(clear){out.textContent='';return}
+    if(text)add(text,isErr?'err':'');
+    var m=text.match(/^open: (\S+)/m);   // from `socials --open`
+    if(m&&/^(https:\/\/|mailto:)/.test(m[1])){
+      if(m[1].indexOf('mailto:')===0)location.href=m[1];else window.open(m[1],'_blank','noopener');
+    }
+  }
+  function run(line){
+    line=line.trim();
+    if(busy)return;
+    if(!line){add('type a command, or press Enter on the prefilled ping. try `commands` to see everything.','dim');return}
+    hist.push(line);hi=hist.length;echo(line);
+    if(line==='clear'){out.textContent='';return}
+    busy=true;
+    fetch('/api/run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({line:line,tz:tz()})})
+      .then(function(r){
+        if(r.status===429){show('slow down a little, too many requests.',true);return}
+        return r.json().then(function(d){show(d.output,d.error)});
+      })
+      .catch(function(){show('could not reach the CLI server right now. try again in a moment.',true)})
+      .then(function(){busy=false;out.scrollTop=out.scrollHeight});
+  }
+  inp.addEventListener('keydown',function(e){
+    if(e.isComposing)return;
+    if(e.key==='Enter'){var v=inp.value;inp.value='';inp.placeholder='type a command, e.g. whoami';run(v)}
+    else if(e.key==='ArrowUp'){e.preventDefault();if(hi>0){hi--;inp.value=hist[hi]}}
+    else if(e.key==='ArrowDown'){e.preventDefault();if(hi<hist.length-1){hi++;inp.value=hist[hi]}else{hi=hist.length;inp.value=''}}
+    else if(e.key==='Tab'){
+      e.preventDefault();var v=inp.value.trim().toLowerCase();
+      if(v&&v.indexOf(' ')<0){var m=CMDS.filter(function(c){return c.indexOf(v)===0});if(m.length===1)inp.value=m[0]}
+    }
+  });
+  document.querySelectorAll('[data-cmd]').forEach(function(b){b.addEventListener('click',function(){inp.value='';run(b.dataset.cmd)})});
+  term.addEventListener('click',function(e){
+    if(e.target.closest('a')||String(window.getSelection()))return;
+    inp.focus();
+  });
+  add('Welcome. This terminal runs a CLI I wrote in Go with Cobra.','dim');
+  add('Press Enter to run ping, or type commands to see everything.','dim');
 })();
 </script>
 </body>
